@@ -23,51 +23,48 @@ RegisterNumber: 212223230074
 ```
 import pandas as pd
 import matplotlib.pyplot as plt
-data = pd.read_csv(r"C:\Users\admin\Downloads\Mall_Customers.csv")
-
-data.head()
-data.info()
-data.isnull().sum()
-
+df = pd.read_csv(r"Mall_Customers.csv")
+df.head()
+df.info()
+df.isnull().sum()
 from sklearn.cluster import KMeans
 wcss = []
-
 for i in range(1,11):
-  kmeans = KMeans(n_clusters = i,init = "k-means++")
-  kmeans.fit(data.iloc[:,3:])
-  wcss.append(kmeans.inertia_)
-  
+    kmeans = KMeans(n_clusters = i,init = "k-means++")
+    kmeans.fit(df.iloc[:,3:])
+    wcss.append(kmeans.inertia_)
 plt.plot(range(1,11),wcss)
-plt.xlabel("No. of Clusters")
+plt.xlabel("No.of Clusters")
 plt.ylabel("wcss")
 plt.title("Elbow Method")
-
 km = KMeans(n_clusters = 5)
-km.fit(data.iloc[:,3:])
-
-y_pred = km.predict(data.iloc[:,3:])
-print("Y Predicted : \n",y_pred)
-
-data['cluster'] = y_pred
-df0 = data[data['cluster'] == 0]
-df1 = data[data['cluster'] == 1]
-df2 = data[data['cluster'] == 2]
-df3 = data[data['cluster'] == 3]
-df4 = data[data['cluster'] == 4]
-
-
-plt.scatter(df0["Annual Income (k$)"], df0["Spending Score (1-100)"], c='red', label="Cluster 0")
-plt.scatter(df1["Annual Income (k$)"], df1["Spending Score (1-100)"], c='black', label="Cluster 1")
-plt.scatter(df2["Annual Income (k$)"], df2["Spending Score (1-100)"], c='blue', label="Cluster 2")
-plt.scatter(df3["Annual Income (k$)"], df3["Spending Score (1-100)"], c='green', label="Cluster 3")
-plt.scatter(df4["Annual Income (k$)"], df4["Spending Score (1-100)"], c='magenta', label="Cluster 4")
+km.fit(df.iloc[:,3:])
+y_pred = km.predict(df.iloc[:,3:])
+print("Predicted values : ")
+y_pred
+df["cluster"] = y_pred
+df0 = df[df["cluster"]==0]
+df1 = df[df["cluster"]==1]
+df2 = df[df["cluster"]==2]
+df3 = df[df["cluster"]==3]
+df4 = df[df["cluster"]==4]
+df0.head()
+df1.head()
+df2.head()
+df3.head()
+df4.head()
+plt.scatter(df0["Annual Income (k$)"],df0["Spending Score (1-100)"],c="red",label="cluster0")
+plt.scatter(df1["Annual Income (k$)"],df1["Spending Score (1-100)"],c="black",label="cluster1")
+plt.scatter(df2["Annual Income (k$)"],df2["Spending Score (1-100)"],c="blue",label="cluster2")
+plt.scatter(df3["Annual Income (k$)"],df3["Spending Score (1-100)"],c="green",label="cluster3")
+plt.scatter(df4["Annual Income (k$)"],df4["Spending Score (1-100)"],c="magenta",label="cluster4")
 plt.legend()
-plt.title("Customer Segments")
+plt.title("Customer segments")
 ```
 ## Output:
 
-![image](https://github.com/user-attachments/assets/52a695de-ed19-4824-8f13-dd5d6a082155)
-![image](https://github.com/user-attachments/assets/d91e0f83-0279-491c-88a7-1cf82e1ef88e)
+![image](https://github.com/user-attachments/assets/498310ea-c221-4b84-9da8-cfa543dc75ec)
+
 
 
 ## Result:
